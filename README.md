@@ -17,9 +17,11 @@ Disable selinux in all the nodes
   [root@master ~]# sed -i 's/SELINUX=enforcing/SELINUX=disabled/'  /etc/selinux/config
   
 Enable the kernel bridge for every system
+
 [root@master ~]# modprobe br_netfilter
 [root@master ~]# echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
 Disable the swap
+
 [root@master ~]# swapoff  -a
 Installing docker and kubeadm in all the nodes
 [root@master ~]# yum  install  docker kubeadm  -y
@@ -40,6 +42,7 @@ We are here using Calico Networking so we need to pass some parameter you can st
 [root@master ~]# kubeadm  init --pod-network-cidr=192.168.0.0/16
 this is optional
 In case of cloud like aws , azure if want to bind public with certificate of kubernetes
+
 [root@master ~]# kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=0.0.0.0   --apiserver-cert-extra-sans=publicip,privateip,serviceip
 Use the output of above command and paste it to all the worker nodes
 Do this step in master node
@@ -51,6 +54,7 @@ kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 After this all nodes will be ready in state
 
 Now you can check nodes status
+
 [root@master ~]# kubectl get nodes
 NAME                 STATUS   ROLES    AGE     VERSION
 master.example.com   Ready    master   11m     v1.12.2
